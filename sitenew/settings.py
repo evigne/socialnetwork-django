@@ -48,6 +48,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'sitenew.middleware.LoginRequiredMiddleware'
 ]
 
 ROOT_URLCONF = 'sitenew.urls'
@@ -121,6 +122,13 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 LOGIN_REDIRECT_URL ='/account'
+
+LOGIN_URL = '/account/login'
+
+LOGIN_EXEMPT_URLS = (
+    r'^account/logout/$',
+    r'^account/register/$',
+)
 
 EMAIL_HOST = 'localhost'
 EMAIL_PORT = 1025
