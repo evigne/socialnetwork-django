@@ -128,7 +128,28 @@ LOGIN_URL = '/account/login'
 LOGIN_EXEMPT_URLS = (
     r'^account/logout/$',
     r'^account/register/$',
+
 )
+
+"""
+https://stackoverflow.com/questions/5802189/django-errno-111-connection-refused/5802348#5802348
+
+Looks like you are trying to send a mail (send_mail()) and your mail settings in your settings.py are not correct.
+
+You should check the docs for sending emails.
+
+For debugging purposes you could setup a local smtpserver with this command:
+
+python -m smtpd -n -c DebuggingServer localhost:1025
+and adjust your mail settings accordingly:
+
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 1025
+This is documented here: Testing e-mail sending
+
+As an alternative to starting a dedicated debugging server you could use the console.EmailBackend which was added to Django recently.
+
+"""
 
 EMAIL_HOST = 'localhost'
 EMAIL_PORT = 1025
