@@ -4,6 +4,7 @@ import re
 from django.conf import settings
 from django.shortcuts import redirect
 from django.contrib.auth import logout
+from django.urls import reverse
 
 
 
@@ -46,9 +47,10 @@ class LoginRequiredMiddleware:
         print(path)
         url_is_exempt = any(url.match(path) for url in EXEMPT_URLS)
 
-        if path == 'account/logout/':
+        if path == reverse('accounts:logout').lstrip('/'):#reverse('accounts:logout') 'accounts' is the namespace of accouts app
             logout(request)
-        
+
+
 
          # if not request.user.is_authenticated:
         #     if not any(url.match(path) for url in EXEMPT_URLS):

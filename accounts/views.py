@@ -1,9 +1,10 @@
 from django.shortcuts import render,redirect
 from accounts.forms import RegistrationForm, EditProfileForm
-from django.contrib.auth.models import User
+#from django.contrib.auth.models import User
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash #to make sure that the user is still logged in after the password reset
-from django.contrib.auth.decorators import login_required
+from django.urls import reverse
+#from django.contrib.auth.decorators import login_required
 
 #@login_required() - replaced by LoginRequiredMiddleware created by me
 def home(request):
@@ -19,7 +20,7 @@ def register(request):
 		if form.is_valid():
 			form.save()
 
-			return redirect('/account')
+			return redirect(reverse('accounts:home'))
 		else:
 			print(form.errors)
 
@@ -41,7 +42,7 @@ def edit_profile(request):
 		form = EditProfileForm(request.POST, instance=request.user)
 		if form.is_valid():
 			form.save()
-			return redirect('/account/profile')
+			return redirect(reverse('accounts:view_profile'))
 		else:
 			redirect('account/profile/edit')
 	else:
@@ -58,7 +59,7 @@ def change_password(request):
 		if form.is_valid():
 			form.save()
 			update_session_auth_hash(request, form.user)  # user of the particular form 
-			return redirect('/account/profile')
+			return redirect(reverse('accounts:view_profile'))
 		else:
 			return redirect('/account/change-password')
 	else:

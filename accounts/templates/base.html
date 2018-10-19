@@ -30,17 +30,17 @@
 
               {% if user.is_authenticated %}  <!-- For LoggedIn User -->
               <ul class="nav navbar-nav">
-                  <li><a href="/account">Home</a></li>
+                  <li><a href="{% url 'accounts:home' %}">Home</a></li>
 
-                  <li><a href="/account/profile">Profile</a></li>
-                  <li><a href="/account/profile/edit">Edit Profile</a></li>
-                  <li><a href="/account/change-password">Change Password</a></li>
-                  <li><a href="/account/reset-password">Reset PAssword</a></li>
+                  <li><a href="{% url 'accounts:view_profile' %}">Profile</a></li>
+                  <li><a href="{% url 'accounts:edit_profile' %}">Edit Profile</a></li>
+                  <li><a href="{% url 'accounts:change_password' %}">Change Password</a></li>
+                  <li><a href="{% url 'accounts:reset_password' %}">Reset PAssword</a></li>
 
               </ul>
               <ul class="nav navbar-nav navbar-right">
 
-                  <li><a href="/account/logout">Logout</a></li>
+                  <li><a href="{% url 'accounts:logout' %}">Logout</a></li>
 
             </ul>
 
@@ -48,8 +48,8 @@
 
               <ul class="nav navbar-nav navbar-right">
 
-              <li><a href="/account/login">Login</a></li>
-              <li><a href="/account/register">Register</a></li>
+              <li><a href="{% url 'accounts:login' %}">Login</a></li>
+              <li><a href="{% url 'accounts:register' %}">Register</a></li>
             </ul>
 
            {% endif %}
