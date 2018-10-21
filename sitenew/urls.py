@@ -14,13 +14,30 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
 from django.conf.urls import url,include
 from . import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     url(r'^$', views.login_redirect ,name='login_redirect'),
     url(r'^admin/', admin.site.urls),
     url(r'^account/',include('accounts.urls',namespace='accounts')),
 
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+"""
+Serving files uploaded by a user during development¶
+During development, you can serve user-uploaded media files from MEDIA_ROOT using the django.views.static.serve() view.
+
+This is not suitable for production use! For some common deployment strategies, see Deploying static files.
+
+For example, if your MEDIA_URL is defined as /media/, you can do this by adding the following snippet to your urls.py:
+
+from django.conf import settings
+from django.conf.urls.static import static
+
+urlpatterns = [
+    # ... the rest of your URLconf goes here ...
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+"""

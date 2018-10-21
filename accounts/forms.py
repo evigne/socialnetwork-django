@@ -1,10 +1,10 @@
 from django import forms #to use forms from django
 from django.contrib.auth.models import User # to use User model from django
 from django.contrib.auth.forms import UserCreationForm,UserChangeForm
+from accounts.models import UserProfile
 
 class RegistrationForm(UserCreationForm):
      email = forms.EmailField(required=True)
-
 
      class Meta:
          model = User
@@ -31,10 +31,20 @@ class RegistrationForm(UserCreationForm):
 
          return user
 
-
+class ProfileEdit(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = (""
+                  "description",
+                  "city",
+                  "website",
+                  "phone",
+                  "image"
+                  )
 
 
 class EditProfileForm(UserChangeForm):
+
 
 
     class Meta:
@@ -43,7 +53,7 @@ class EditProfileForm(UserChangeForm):
             "first_name",
             "last_name",
             "email",
-            "password"
+            "password",
         )
         """ 
         or we can use

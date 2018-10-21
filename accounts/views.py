@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from accounts.forms import RegistrationForm, EditProfileForm
+from accounts.forms import RegistrationForm, EditProfileForm,ProfileEdit
 #from django.contrib.auth.models import User
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash #to make sure that the user is still logged in after the password reset
@@ -40,14 +40,18 @@ def view_profile(request):
 def edit_profile(request):
 	if request.method == 'POST':
 		form = EditProfileForm(request.POST, instance=request.user)
-		if form.is_valid():
+		form2 = ProfileEdit(request.POST, instance=request.user.userprofile)
+		if form.is_valid() and form2.is_valid():
 			form.save()
+			form2.save()
 			return redirect(reverse('accounts:view_profile'))
 		else:
 			redirect('account/profile/edit')
 	else:
 		form = EditProfileForm(instance=request.user)
-		args = {'form':form}
+		form2 = ProfileEdit(instance=request.user)
+
+		args = {'form':form,'form2':form2}
 
 		return render(request,'accounts/edit_profile.html',args)
 
